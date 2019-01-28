@@ -64,6 +64,7 @@ let g:secure_modelines_allowed_items = [
 								\ ]
 
 let g:python3_host_prog="C:/Python37/python.exe"
+let g:ncm2#total_popup_limit=12
 
 " language server protocol
 " let g:LanguageClient_settingsPath = "/home/jon/.vim/settings.json"
@@ -80,6 +81,9 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+
+inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " =============================================================================
 " # Editor settings
