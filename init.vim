@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 set rtp+=~/dev/others/base16/vim/
-call plug#begin('C:/Users/cfiet/AppData/Local/nvim/plug')
+call plug#begin('C:/Users/Maciek/AppData/Local/nvim/plug')
 
 " Load plugins
 " VIM enhancements
@@ -32,7 +32,6 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-
 
 " LanguageClient enhancements
 " Showing function signature and inline doc.
@@ -68,7 +67,7 @@ let g:python3_host_prog="C:/Python37/python.exe"
 " language server protocol
 " let g:LanguageClient_settingsPath = "/home/jon/.vim/settings.json"
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['C:\Users\cfiet\.cargo\bin\rustup.exe', 'run', 'nightly', 'rls']
+    \ 'rust': ['C:\Users\Maciek\.cargo\bin\rustup.exe', 'run', 'stable', 'rls']
     \ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -80,6 +79,9 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+
+inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " =============================================================================
 " # Editor settings
@@ -202,5 +204,3 @@ au Filetype rust set colorcolumn=100
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
-
-
