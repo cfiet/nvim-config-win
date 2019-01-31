@@ -204,3 +204,6 @@ au Filetype rust set colorcolumn=100
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
+
+" ESC in terminal mode
+tnoremap <Esc> <C-\><C-n>
