@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 set rtp+=~/dev/others/base16/vim/
-call plug#begin('C:/Users/cfiet/AppData/Local/nvim/plug')
+call plug#begin('plug')
 
 " Load plugins
 " VIM enhancements
@@ -19,12 +19,12 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Language client
 Plug 'autozimu/LanguageClient-neovim', {
 	\ 'branch': 'next',
-	\ 'do': 'powershell -File .\install.ps1',
+	\ 'do': 'sh .\install.sh',
 	\ }
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Completion plugins
@@ -63,12 +63,10 @@ let g:secure_modelines_allowed_items = [
                 \ "colorcolumn"
 								\ ]
 
-let g:python3_host_prog="C:/Python37/python.exe"
-
 " language server protocol
 " let g:LanguageClient_settingsPath = "/home/jon/.vim/settings.json"
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['C:\Users\cfiet\.cargo\bin\rustup.exe', 'run', 'nightly', 'rls']
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls']
     \ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
