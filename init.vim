@@ -1,7 +1,8 @@
 set nocompatible
 filetype off
 set rtp+=~/dev/others/base16/vim/
-call plug#begin('plug')
+
+call plug#begin('/home/cfiet/.config/nvim/plug')
 
 " Load plugins
 " VIM enhancements
@@ -19,7 +20,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Language client
 Plug 'autozimu/LanguageClient-neovim', {
 	\ 'branch': 'next',
-	\ 'do': 'sh .\install.sh',
+	\ 'do': 'sh install.sh',
 	\ }
 
 " Fuzzy finder
@@ -33,7 +34,6 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 
-
 " LanguageClient enhancements
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
@@ -42,6 +42,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 
@@ -63,12 +64,37 @@ let g:secure_modelines_allowed_items = [
                 \ "colorcolumn"
 								\ ]
 
+" Ale
+let g:ale_virtualtext_cursor = 1
+let g:ale_linters = {
+	\ 'rust': [
+	\		'rls',
+	\		'rustfmt'
+	\	]
+	\ }
+" let g:ale_rust_cargo_use_check = 1
+" let g:ale_rust_cargo_check_tests = 1
+" let g:ale_rust_cargo_check_examples = 1
+" let g:ale_rust_cargo_use_clippy = 0
+let g:ale_rust_rls_toolchain = 'beta'
+let g:ale_rust_rls_config = {
+	\ "rust": {
+	\		"all_targets": 0,
+	\		"cfg_test": 1,
+	\		"clippy_preference": "on",
+	\		"racer_completion": 1,
+	\		"show_hover_context": 1
+	\ }
+	\ }
+
+
 " language server protocol
-" let g:LanguageClient_settingsPath = "/home/jon/.vim/settings.json"
+let g:LanguageClient_settingsPath = "/home/cfiet/.rls.settings.json"
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls']
-    \ }
+	\ 'rust': ['rls']
+	\ }
 let g:LanguageClient_autoStart = 1
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
@@ -78,6 +104,8 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " =============================================================================
 " # Editor settings
@@ -91,10 +119,10 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
-  " screen does not (yet) support truecolor
-  set termguicolors
-endif
+
+" if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+set termguicolors
+" endif
 
 " Settings needed for .lvimrc
 set exrc
@@ -196,9 +224,17 @@ if has("autocmd")
 endif
 
 au Filetype rust set colorcolumn=100
+	\ foldmethod=syntax
+	\ foldlevel=1 
+
+au Filetype rust normal zR
 
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
+  
+au BufWinLeave * mkview
+au BufWinEnter * silent! loadview
 
-
+let g:base16_shell_path="/home/cfiet/.base16-manager/chriskempson/base16-shell/scripts"
+so /home/cfiet/.config/nvim/colorscheme.vim
