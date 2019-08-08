@@ -24,7 +24,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Completion plugins
@@ -43,7 +43,6 @@ Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
-
 if !has('gui_running')
   set t_Co=256
 endif
@@ -61,15 +60,37 @@ let g:secure_modelines_allowed_items = [
                 \ "rightleft",   "rl",   "norightleft", "norl",
                 \ "colorcolumn"
 								\ ]
-
 let g:python3_host_prog="C:/Python37/python.exe"
 
-" language server protocol
-" let g:LanguageClient_settingsPath = "/home/jon/.vim/settings.json"
+let g:ale_virtualtext_cursor = 1
+let g:ale_linters = {
+	\ 'rust': [
+	\		'rls',
+	\		'rustfmt'
+	\	]
+	\ }
+
+" let g:ale_rust_cargo_use_check = 1
+" let g:ale_rust_cargo_check_tests = 1
+" let g:ale_rust_cargo_check_examples = 1
+" let g:ale_rust_cargo_use_clippy = 0
+let g:ale_rust_rls_toolchain = 'beta'
+let g:ale_rust_rls_config = {
+	\ "rust": {
+	\		"all_targets": 0,
+	\		"cfg_test": 1,
+	\		"clippy_preference": "on",
+	\		"racer_completion": 1,
+	\		"show_hover_context": 1
+	\ }
+	\ }
+
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['C:\Users\Maciek\.cargo\bin\rustup.exe', 'run', 'stable', 'rls']
+    \ 'rust': ['rls']
     \ }
 let g:LanguageClient_autoStart = 1
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
@@ -207,3 +228,5 @@ autocmd BufRead *.md set filetype=markdown
 
 " ESC in terminal mode
 tnoremap <Esc> <C-\><C-n>
+
+so C:\Users\Maciek\AppData\Local\nvim\colorscheme.vim
