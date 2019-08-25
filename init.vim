@@ -15,7 +15,9 @@ Plug 'roxma/nvim-yarp'
 Plug 'itchyny/lightline.vim'
 Plug 'w0rp/ale'
 Plug 'machakann/vim-highlightedyank'
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/denite.nvim'
 
 " Language client
 Plug 'autozimu/LanguageClient-neovim', {
@@ -43,9 +45,11 @@ Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 
 Plug 'easymotion/vim-easymotion'
+
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+
 call plug#end()
-
-
 if !has('gui_running')
   set t_Co=256
 endif
@@ -63,6 +67,7 @@ let g:secure_modelines_allowed_items = [
                 \ "rightleft",   "rl",   "norightleft", "norl",
                 \ "colorcolumn"
 								\ ]
+let g:deoplete#enable_at_startup = 1
 
 " Ale
 let g:ale_virtualtext_cursor = 1
@@ -89,9 +94,9 @@ let g:ale_rust_rls_config = {
 
 
 " language server protocol
-let g:LanguageClient_settingsPath = "/home/cfiet/.rls.settings.json"
 let g:LanguageClient_serverCommands = {
-	\ 'rust': ['rls']
+	\ 'rust': ['rls'],
+	\ 'typescript': ['typescript-language-server', '--stdio']
 	\ }
 let g:LanguageClient_autoStart = 1
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
